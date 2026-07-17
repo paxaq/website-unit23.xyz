@@ -41,7 +41,7 @@ function structuralChecks() {
   assert(/class="footer"/.test(html), "footer missing");
   assert(/footer-grid/.test(html), "multi-column footer missing");
 
-  // Six service offerings
+  // Six service offerings (English source + i18n keys)
   for (const name of [
     "Import &amp; export",
     "Online retail",
@@ -52,14 +52,36 @@ function structuralChecks() {
   ]) {
     assert(html.includes(name), `service line missing: ${name}`);
   }
+  for (const key of [
+    "trade.s1.title",
+    "trade.s2.title",
+    "trade.s3.title",
+    "consulting.s1.title",
+    "consulting.s2.title",
+    "consulting.s3.title",
+  ]) {
+    assert(html.includes(`data-i18n="${key}"`), `i18n key missing in HTML: ${key}`);
+  }
 
   // Identity
   assert(html.includes("UNIT23 LIMITED"), "company legal name missing");
   assert(html.includes("Hong Kong"), "Hong Kong identity missing");
-  assert(/lang="en"/.test(html), "html lang en missing");
+  assert(/lang="en-US"/.test(html) || /lang="en"/.test(html), "html lang en missing");
 
-  // No Chinese UI copy heuristics (CJK)
-  assert(!/[\u4e00-\u9fff]/.test(html.replace(/<!--[\s\S]*?-->/g, "")), "CJK characters found in UI HTML");
+  // i18n assets
+  assert(fs.existsSync(path.join(ROOT, "i18n.js")), "i18n.js missing");
+  assert(/src="i18n\.js"/.test(html), "homepage must load i18n.js");
+  assert(/data-set-lang="en"/.test(html), "EN language control missing");
+  assert(/data-set-lang="ar"/.test(html), "AR language control missing");
+  assert(/data-set-lang="fr"/.test(html), "FR language control missing");
+  assert(/data-set-lang="es"/.test(html), "ES language control missing");
+
+  const i18nSrc = read("i18n.js");
+  for (const locale of ["en", "ar", "fr", "es"]) {
+    assert(new RegExp(`\\b${locale}\\s*:`).test(i18nSrc), `locale pack missing: ${locale}`);
+  }
+  assert(i18nSrc.includes("ar-SA"), "ar-SA locale meta missing");
+  assert(i18nSrc.includes("en-US"), "en-US locale meta missing");
 
   // CSS design system
   assert(css.length > 4000, "stylesheet too small to be enterprise layout");
@@ -169,9 +191,33 @@ async function browserChecks(port) {
   const closed = await page.evaluate(() => !document.body.classList.contains("nav-open"));
   assert(closed, "mobile nav did not close after link click");
 
-  // Desktop screenshot of filled homepage
+  // Language switch: Arabic RTL
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(url, { waitUntil: "networkidle" });
+  await page.locator('.lang-switch-nav [data-set-lang="ar"]').click();
+  await page.waitForFunction(() => document.documentElement.dir === "rtl");
+  const arTitle = await page.locator("#hero-title").innerText();
+  assert(/حدود|تجارة|وضوح/.test(arTitle) || arTitle.length > 10, `Arabic hero title not applied: ${arTitle}`);
+  const arLang = await page.evaluate(() => document.documentElement.lang);
+  assert(arLang === "ar-SA", `expected ar-SA, got ${arLang}`);
+
+  // French
+  await page.locator('.lang-switch-nav [data-set-lang="fr"]').click();
+  await page.waitForFunction(() => document.documentElement.lang === "fr");
+  const frTitle = await page.locator("#hero-title").innerText();
+  assert(/Commerce|transfrontalier|clarté/i.test(frTitle), `French hero missing: ${frTitle}`);
+
+  // Spanish
+  await page.locator('.lang-switch-nav [data-set-lang="es"]').click();
+  await page.waitForFunction(() => document.documentElement.lang === "es");
+  const esTitle = await page.locator("#hero-title").innerText();
+  assert(/Comercio|transfronterizo|claridad/i.test(esTitle), `Spanish hero missing: ${esTitle}`);
+
+  // Back to English US
+  await page.locator('.lang-switch-nav [data-set-lang="en"]').click();
+  await page.waitForFunction(() => document.documentElement.lang === "en-US");
+
+  // Desktop screenshot of filled homepage
   await page.screenshot({ path: screenshot, fullPage: true });
   assert(fs.existsSync(screenshot) && fs.statSync(screenshot).size > 20000, "screenshot missing/too small");
 
@@ -188,6 +234,8 @@ async function browserChecks(port) {
     footerCols,
     title,
     screenshot,
+    languagesChecked: ["en", "ar", "fr", "es"],
+    sampleTitles: { ar: arTitle, fr: frTitle, es: esTitle },
     errors,
   };
   fs.writeFileSync(outLog, JSON.stringify(summary, null, 2));

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" data-lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,30 +33,56 @@
       content="Hong Kong trading company: cross-border trade and information consulting services."
     />
 
+    <script>
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search).get("lang");
+          var s = localStorage.getItem("unit23-lang");
+          var l = (p || s || "en").toLowerCase();
+          if (l.indexOf("ar") === 0) l = "ar";
+          else if (l.indexOf("fr") === 0) l = "fr";
+          else if (l.indexOf("es") === 0) l = "es";
+          else l = "en";
+          document.documentElement.lang =
+            l === "ar" ? "ar-SA" : l === "en" ? "en-US" : l;
+          document.documentElement.dir = l === "ar" ? "rtl" : "ltr";
+          document.documentElement.setAttribute("data-lang", l);
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <a class="sr-only" href="#main">Skip to content</a>
+    <a class="sr-only" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
     <div class="topbar">
       <div class="container topbar-inner">
         <div class="topbar-meta">
           <span>UNIT23 LIMITED</span>
-          <span>Hong Kong SAR</span>
+          <span data-i18n="top.location">Hong Kong SAR</span>
         </div>
-        <a href="mailto:hello@unit23.xyz">hello@unit23.xyz</a>
+        <div class="topbar-end">
+          <div class="lang-switch" role="group" data-i18n-aria="a11y.lang" aria-label="Language">
+            <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true" title="English (US)">EN</button>
+            <button type="button" class="lang-btn" data-set-lang="ar" aria-pressed="false" title="العربية">AR</button>
+            <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false" title="Français">FR</button>
+            <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="false" title="Español">ES</button>
+          </div>
+          <a href="mailto:hello@unit23.xyz">hello@unit23.xyz</a>
+        </div>
       </div>
     </div>
 
     <header class="nav" id="site-nav">
       <div class="container nav-inner">
-        <a class="logo" href="#top" aria-label="UNIT23 home">
+        <a class="logo" href="#top" data-i18n-aria="a11y.home" aria-label="UNIT23 home">
           <span class="logo-mark" aria-hidden="true">23</span>
           <span class="logo-text">
             UNIT23
@@ -64,23 +90,30 @@
           </span>
         </a>
 
-        <nav class="nav-links" aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#why-us">Why UNIT23</a>
-          <a href="#process">How we work</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#contact">Contact</a>
+        <nav class="nav-links" data-i18n-aria="a11y.primaryNav" aria-label="Primary">
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#services" data-i18n="nav.services">Services</a>
+          <a href="#why-us" data-i18n="nav.why">Why UNIT23</a>
+          <a href="#process" data-i18n="nav.process">How we work</a>
+          <a href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
 
         <div class="nav-actions">
-          <a class="btn btn-deep btn-sm" href="mailto:hello@unit23.xyz">Enquire</a>
+          <div class="lang-switch lang-switch-nav" role="group" data-i18n-aria="a11y.lang" aria-label="Language">
+            <button type="button" class="lang-btn" data-set-lang="en" aria-pressed="true" title="English (US)">EN</button>
+            <button type="button" class="lang-btn" data-set-lang="ar" aria-pressed="false" title="العربية">AR</button>
+            <button type="button" class="lang-btn" data-set-lang="fr" aria-pressed="false" title="Français">FR</button>
+            <button type="button" class="lang-btn" data-set-lang="es" aria-pressed="false" title="Español">ES</button>
+          </div>
+          <a class="btn btn-deep btn-sm" href="mailto:hello@unit23.xyz" data-i18n="nav.enquire">Enquire</a>
           <button
             class="nav-toggle"
             type="button"
             id="nav-toggle"
             aria-expanded="false"
             aria-controls="nav-panel"
+            data-i18n-aria="a11y.openMenu"
             aria-label="Open menu"
           >
             <span class="nav-toggle-bars" aria-hidden="true"></span>
@@ -90,66 +123,65 @@
 
       <div class="nav-panel" id="nav-panel" hidden>
         <div class="container">
-          <nav aria-label="Mobile">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#why-us">Why UNIT23</a>
-            <a href="#process">How we work</a>
-            <a href="#capabilities">Capabilities</a>
-            <a href="#contact">Contact</a>
-            <a href="mailto:hello@unit23.xyz">Email hello@unit23.xyz</a>
+          <nav data-i18n-aria="a11y.mobileNav" aria-label="Mobile">
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#services" data-i18n="nav.services">Services</a>
+            <a href="#why-us" data-i18n="nav.why">Why UNIT23</a>
+            <a href="#process" data-i18n="nav.process">How we work</a>
+            <a href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
+            <a href="mailto:hello@unit23.xyz" data-i18n="nav.emailUs">Email hello@unit23.xyz</a>
           </nav>
         </div>
       </div>
     </header>
 
     <main id="main">
-      <!-- Hero -->
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="container hero-grid">
           <div>
-            <p class="eyebrow fade-in" style="--d: 0ms">
+            <p class="eyebrow fade-in" style="--d: 0ms" data-i18n="hero.eyebrow">
               Hong Kong · Trade &amp; consulting
             </p>
-            <h1 id="hero-title" class="fade-in" style="--d: 60ms">
+            <h1 id="hero-title" class="fade-in" style="--d: 60ms" data-i18n="hero.title">
               Cross-border commerce, structured for clarity.
             </h1>
-            <p class="hero-lede fade-in" style="--d: 120ms">
+            <p class="hero-lede fade-in" style="--d: 120ms" data-i18n="hero.lede">
               UNIT23 LIMITED helps partners move goods, sell online, and
               coordinate logistics—while advising on supply chain, digital
               marketing, and multi-channel growth from Hong Kong.
             </p>
             <div class="hero-actions fade-in" style="--d: 180ms">
               <a class="btn btn-primary" href="#services">
-                Explore services
+                <span data-i18n="hero.ctaServices">Explore services</span>
                 <span aria-hidden="true">→</span>
               </a>
-              <a class="btn btn-ghost" href="#contact">Talk to our team</a>
+              <a class="btn btn-ghost" href="#contact" data-i18n="hero.ctaContact">Talk to our team</a>
             </div>
           </div>
 
-          <aside class="hero-panel fade-in" style="--d: 220ms" aria-label="Business focus">
-            <h2>What we focus on</h2>
+          <aside class="hero-panel fade-in" style="--d: 220ms" data-i18n-aria="a11y.businessFocus" aria-label="Business focus">
+            <h2 data-i18n="hero.focusTitle">What we focus on</h2>
             <ul class="hero-list">
               <li>
                 <span class="list-icon" aria-hidden="true">01</span>
                 <div>
-                  <strong>Cross-border trade</strong>
-                  Import &amp; export, online retail, and logistics coordination.
+                  <strong data-i18n="hero.focus1.title">Cross-border trade</strong>
+                  <span data-i18n="hero.focus1.body">Import &amp; export, online retail, and logistics coordination.</span>
                 </div>
               </li>
               <li>
                 <span class="list-icon" aria-hidden="true">02</span>
                 <div>
-                  <strong>Information consulting</strong>
-                  Supply chain, online marketing, and channel management.
+                  <strong data-i18n="hero.focus2.title">Information consulting</strong>
+                  <span data-i18n="hero.focus2.body">Supply chain, online marketing, and channel management.</span>
                 </div>
               </li>
               <li>
                 <span class="list-icon" aria-hidden="true">03</span>
                 <div>
-                  <strong>Hong Kong base</strong>
-                  A practical hub for regional and international commerce.
+                  <strong data-i18n="hero.focus3.title">Hong Kong base</strong>
+                  <span data-i18n="hero.focus3.body">A practical hub for regional and international commerce.</span>
                 </div>
               </li>
             </ul>
@@ -157,30 +189,29 @@
         </div>
       </section>
 
-      <!-- About -->
       <section class="section" id="about" aria-labelledby="about-title">
         <div class="container">
           <div class="section-head">
-            <p class="section-kicker">About the company</p>
-            <h2 id="about-title">A Hong Kong firm built around trade execution and practical advice.</h2>
+            <p class="section-kicker" data-i18n="about.kicker">About the company</p>
+            <h2 id="about-title" data-i18n="about.title">A Hong Kong firm built around trade execution and practical advice.</h2>
           </div>
 
           <div class="about-layout">
             <div class="about-copy">
-              <p>
+              <p data-i18n="about.p1">
                 UNIT23 LIMITED is a Hong Kong trading and advisory company. We
                 work with counterparties who need reliable support moving products
                 across borders—and clear information to make commercial decisions
                 with confidence.
               </p>
-              <p>
+              <p data-i18n="about.p2">
                 Our trade work covers import and export coordination, online
                 retail operations, and logistics arrangements with delivery
                 partners. Our consulting work strengthens supply chain visibility,
                 online marketing direction, and channel management for brands and
                 distributors.
               </p>
-              <p>
+              <p data-i18n="about.p3">
                 We keep engagements structured and proportionate: define the
                 commercial objective, agree the scope, execute with transparent
                 updates, and hand over a clean operating picture.
@@ -189,22 +220,22 @@
 
             <div class="about-side">
               <div class="fact-card">
-                <h3>Company profile</h3>
+                <h3 data-i18n="about.profile">Company profile</h3>
                 <dl class="fact-rows">
                   <div class="fact-row">
-                    <dt>Legal name</dt>
+                    <dt data-i18n="about.legalName">Legal name</dt>
                     <dd>UNIT23 LIMITED</dd>
                   </div>
                   <div class="fact-row">
-                    <dt>Location</dt>
-                    <dd>Hong Kong SAR</dd>
+                    <dt data-i18n="about.location">Location</dt>
+                    <dd data-i18n="top.location">Hong Kong SAR</dd>
                   </div>
                   <div class="fact-row">
-                    <dt>Focus</dt>
-                    <dd>Cross-border trade &amp; consulting</dd>
+                    <dt data-i18n="about.focus">Focus</dt>
+                    <dd data-i18n="about.focusValue">Cross-border trade &amp; consulting</dd>
                   </div>
                   <div class="fact-row">
-                    <dt>Contact</dt>
+                    <dt data-i18n="about.contact">Contact</dt>
                     <dd>
                       <a href="mailto:hello@unit23.xyz">hello@unit23.xyz</a>
                     </dd>
@@ -212,24 +243,23 @@
                 </dl>
               </div>
               <div class="highlight-card">
-                <p>
+                <p data-i18n="about.quote">
                   “Commerce across borders works best when operations and
                   information move together.”
                 </p>
-                <span>UNIT23 operating principle</span>
+                <span data-i18n="about.quoteAttr">UNIT23 operating principle</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Services -->
       <section class="section section-alt" id="services" aria-labelledby="services-title">
         <div class="container">
           <div class="section-head">
-            <p class="section-kicker">Services</p>
-            <h2 id="services-title">Two pillars. Six service lines.</h2>
-            <p class="section-lede">
+            <p class="section-kicker" data-i18n="services.kicker">Services</p>
+            <h2 id="services-title" data-i18n="services.title">Two pillars. Six service lines.</h2>
+            <p class="section-lede" data-i18n="services.lede">
               Engage us for a single service line or a coordinated package across
               trade execution and commercial consulting.
             </p>
@@ -238,9 +268,9 @@
           <div class="service-pillars">
             <article class="pillar" id="trade" aria-labelledby="trade-title">
               <div class="pillar-head">
-                <div class="pillar-index">Pillar 01</div>
-                <h3 id="trade-title">Cross-border trade</h3>
-                <p class="pillar-intro">
+                <div class="pillar-index" data-i18n="trade.index">Pillar 01</div>
+                <h3 id="trade-title" data-i18n="trade.title">Cross-border trade</h3>
+                <p class="pillar-intro" data-i18n="trade.intro">
                   Commercial support for moving products across markets—buying,
                   selling, and fulfilment coordination from Hong Kong.
                 </p>
@@ -249,8 +279,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">01</span>
                   <div>
-                    <h4>Import &amp; export</h4>
-                    <p>
+                    <h4 data-i18n="trade.s1.title">Import &amp; export</h4>
+                    <p data-i18n="trade.s1.body">
                       Cross-border procurement and sales support, commercial
                       coordination with suppliers and buyers, and trade
                       documentation assistance for international shipments.
@@ -260,8 +290,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">02</span>
                   <div>
-                    <h4>Online retail</h4>
-                    <p>
+                    <h4 data-i18n="trade.s2.title">Online retail</h4>
+                    <p data-i18n="trade.s2.body">
                       Digital storefront and marketplace retail operations for
                       regional and overseas customers, including listing cadence
                       and order-handling workflows.
@@ -271,8 +301,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">03</span>
                   <div>
-                    <h4>Logistics services</h4>
-                    <p>
+                    <h4 data-i18n="trade.s3.title">Logistics services</h4>
+                    <p data-i18n="trade.s3.body">
                       Shipping, warehousing coordination, and last-mile
                       arrangements with logistics partners—aligned to product type
                       and destination market.
@@ -284,9 +314,9 @@
 
             <article class="pillar" id="consulting" aria-labelledby="consulting-title">
               <div class="pillar-head">
-                <div class="pillar-index">Pillar 02</div>
-                <h3 id="consulting-title">Information consulting</h3>
-                <p class="pillar-intro">
+                <div class="pillar-index" data-i18n="consulting.index">Pillar 02</div>
+                <h3 id="consulting-title" data-i18n="consulting.title">Information consulting</h3>
+                <p class="pillar-intro" data-i18n="consulting.intro">
                   Practical advisory work to improve how goods, brands, and
                   channels perform across borders.
                 </p>
@@ -295,8 +325,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">01</span>
                   <div>
-                    <h4>Supply chain management</h4>
-                    <p>
+                    <h4 data-i18n="consulting.s1.title">Supply chain management</h4>
+                    <p data-i18n="consulting.s1.body">
                       Visibility, planning, and process improvement across
                       suppliers, inventory positions, and delivery timelines for
                       more predictable fulfilment.
@@ -306,8 +336,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">02</span>
                   <div>
-                    <h4>Online marketing</h4>
-                    <p>
+                    <h4 data-i18n="consulting.s2.title">Online marketing</h4>
+                    <p data-i18n="consulting.s2.body">
                       Digital campaign planning, platform selection, and
                       performance-oriented content direction for product and brand
                       launches across markets.
@@ -317,8 +347,8 @@
                 <li>
                   <span class="service-num" aria-hidden="true">03</span>
                   <div>
-                    <h4>Channel management</h4>
-                    <p>
+                    <h4 data-i18n="consulting.s3.title">Channel management</h4>
+                    <p data-i18n="consulting.s3.body">
                       Distributor, marketplace, and partner channel setup,
                       alignment of commercial terms, and ongoing coordination to
                       protect sell-through quality.
@@ -331,13 +361,12 @@
         </div>
       </section>
 
-      <!-- Why us -->
       <section class="section" id="why-us" aria-labelledby="why-title">
         <div class="container">
           <div class="section-head">
-            <p class="section-kicker">Why UNIT23</p>
-            <h2 id="why-title">Enterprise basics, without unnecessary complexity.</h2>
-            <p class="section-lede">
+            <p class="section-kicker" data-i18n="why.kicker">Why UNIT23</p>
+            <h2 id="why-title" data-i18n="why.title">Enterprise basics, without unnecessary complexity.</h2>
+            <p class="section-lede" data-i18n="why.lede">
               We design engagements to be understandable to commercial,
               operations, and leadership stakeholders alike.
             </p>
@@ -346,32 +375,32 @@
           <div class="why-grid">
             <article class="why-card">
               <div class="why-icon" aria-hidden="true">HK</div>
-              <h3>Hong Kong vantage point</h3>
-              <p>
+              <h3 data-i18n="why.c1.title">Hong Kong vantage point</h3>
+              <p data-i18n="why.c1.body">
                 Positioned in a major trading hub for regional connectivity,
                 banking access, and international counterparties.
               </p>
             </article>
             <article class="why-card">
               <div class="why-icon" aria-hidden="true">01</div>
-              <h3>Trade + insight together</h3>
-              <p>
+              <h3 data-i18n="why.c2.title">Trade + insight together</h3>
+              <p data-i18n="why.c2.body">
                 Execution and information under one roof—so logistics plans and
                 go-to-market choices stay aligned.
               </p>
             </article>
             <article class="why-card">
               <div class="why-icon" aria-hidden="true">02</div>
-              <h3>Clear commercial scope</h3>
-              <p>
+              <h3 data-i18n="why.c3.title">Clear commercial scope</h3>
+              <p data-i18n="why.c3.body">
                 Defined deliverables, decision owners, and update cadence—so
                 projects do not drift into open-ended activity.
               </p>
             </article>
             <article class="why-card">
               <div class="why-icon" aria-hidden="true">03</div>
-              <h3>Partner-ready posture</h3>
-              <p>
+              <h3 data-i18n="why.c4.title">Partner-ready posture</h3>
+              <p data-i18n="why.c4.body">
                 Built for B2B collaboration with suppliers, brands, platforms,
                 and logistics providers across markets.
               </p>
@@ -380,13 +409,12 @@
         </div>
       </section>
 
-      <!-- Process -->
       <section class="section section-deep" id="process" aria-labelledby="process-title">
         <div class="container">
           <div class="section-head">
-            <p class="section-kicker">How we work</p>
-            <h2 id="process-title">A straightforward engagement path.</h2>
-            <p class="section-lede">
+            <p class="section-kicker" data-i18n="process.kicker">How we work</p>
+            <h2 id="process-title" data-i18n="process.title">A straightforward engagement path.</h2>
+            <p class="section-lede" data-i18n="process.lede">
               From first conversation to ongoing operations, the sequence stays
               visible and easy to follow.
             </p>
@@ -394,29 +422,29 @@
 
           <ol class="process-steps">
             <li class="process-step">
-              <h3>Discover</h3>
-              <p>
+              <h3 data-i18n="process.s1.title">Discover</h3>
+              <p data-i18n="process.s1.body">
                 Clarify markets, products, constraints, and the commercial
                 outcome you need.
               </p>
             </li>
             <li class="process-step">
-              <h3>Scope</h3>
-              <p>
+              <h3 data-i18n="process.s2.title">Scope</h3>
+              <p data-i18n="process.s2.body">
                 Agree service lines, responsibilities, timelines, and how success
                 will be measured.
               </p>
             </li>
             <li class="process-step">
-              <h3>Execute</h3>
-              <p>
+              <h3 data-i18n="process.s3.title">Execute</h3>
+              <p data-i18n="process.s3.body">
                 Run trade operations and/or consulting workstreams with regular
                 status checkpoints.
               </p>
             </li>
             <li class="process-step">
-              <h3>Optimise</h3>
-              <p>
+              <h3 data-i18n="process.s4.title">Optimise</h3>
+              <p data-i18n="process.s4.body">
                 Review results, refine channel or supply chain settings, and plan
                 the next cycle.
               </p>
@@ -425,14 +453,13 @@
         </div>
       </section>
 
-      <!-- Capabilities -->
       <section class="section" id="capabilities" aria-labelledby="cap-title">
         <div class="container">
           <div class="cap-layout">
             <div class="cap-intro section-head" style="margin-bottom: 0">
-              <p class="section-kicker">Capabilities</p>
-              <h2 id="cap-title">Where we typically create leverage.</h2>
-              <p>
+              <p class="section-kicker" data-i18n="cap.kicker">Capabilities</p>
+              <h2 id="cap-title" data-i18n="cap.title">Where we typically create leverage.</h2>
+              <p data-i18n="cap.intro">
                 Whether you need a single cross-border shipment programme or a
                 fuller market-entry support package, we organise work around
                 durable operating capabilities—not one-off tactics.
@@ -440,58 +467,56 @@
             </div>
             <div class="cap-grid">
               <article class="cap-item">
-                <h3>Market entry support</h3>
-                <p>Structure first sales, partners, and fulfilment paths into a new region.</p>
+                <h3 data-i18n="cap.c1.title">Market entry support</h3>
+                <p data-i18n="cap.c1.body">Structure first sales, partners, and fulfilment paths into a new region.</p>
               </article>
               <article class="cap-item">
-                <h3>Supplier coordination</h3>
-                <p>Align lead times, quality expectations, and commercial terms with vendors.</p>
+                <h3 data-i18n="cap.c2.title">Supplier coordination</h3>
+                <p data-i18n="cap.c2.body">Align lead times, quality expectations, and commercial terms with vendors.</p>
               </article>
               <article class="cap-item">
-                <h3>Marketplace operations</h3>
-                <p>Stand up and maintain online retail presence with clean order handling.</p>
+                <h3 data-i18n="cap.c3.title">Marketplace operations</h3>
+                <p data-i18n="cap.c3.body">Stand up and maintain online retail presence with clean order handling.</p>
               </article>
               <article class="cap-item">
-                <h3>Fulfilment orchestration</h3>
-                <p>Connect warehousing and shipping options to service-level targets.</p>
+                <h3 data-i18n="cap.c4.title">Fulfilment orchestration</h3>
+                <p data-i18n="cap.c4.body">Connect warehousing and shipping options to service-level targets.</p>
               </article>
               <article class="cap-item">
-                <h3>Performance marketing direction</h3>
-                <p>Prioritise channels and messaging for measurable demand generation.</p>
+                <h3 data-i18n="cap.c5.title">Performance marketing direction</h3>
+                <p data-i18n="cap.c5.body">Prioritise channels and messaging for measurable demand generation.</p>
               </article>
               <article class="cap-item">
-                <h3>Partner channel governance</h3>
-                <p>Keep distributors and platforms aligned on pricing, stock, and brand rules.</p>
+                <h3 data-i18n="cap.c6.title">Partner channel governance</h3>
+                <p data-i18n="cap.c6.body">Keep distributors and platforms aligned on pricing, stock, and brand rules.</p>
               </article>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CTA -->
       <section class="cta-band" aria-labelledby="cta-title">
         <div class="container cta-inner">
           <div>
-            <h2 id="cta-title">Planning a cross-border initiative?</h2>
-            <p>
+            <h2 id="cta-title" data-i18n="cta.title">Planning a cross-border initiative?</h2>
+            <p data-i18n="cta.body">
               Share your product category, target markets, and timeline. We will
               respond with a clear view on fit and next steps.
             </p>
           </div>
           <div class="cta-actions">
-            <a class="btn btn-primary" href="mailto:hello@unit23.xyz">Email UNIT23</a>
-            <a class="btn btn-ghost" href="#services">Review services</a>
+            <a class="btn btn-primary" href="mailto:hello@unit23.xyz" data-i18n="cta.email">Email UNIT23</a>
+            <a class="btn btn-ghost" href="#services" data-i18n="cta.services">Review services</a>
           </div>
         </div>
       </section>
 
-      <!-- Contact -->
       <section class="section section-alt" id="contact" aria-labelledby="contact-title">
         <div class="container">
           <div class="section-head">
-            <p class="section-kicker">Contact</p>
-            <h2 id="contact-title">Start a conversation.</h2>
-            <p class="section-lede">
+            <p class="section-kicker" data-i18n="contact.kicker">Contact</p>
+            <h2 id="contact-title" data-i18n="contact.title">Start a conversation.</h2>
+            <p class="section-lede" data-i18n="contact.lede">
               For trade enquiries, consulting discussions, or partnership
               introductions.
             </p>
@@ -499,42 +524,42 @@
 
           <div class="contact-layout">
             <div class="contact-card">
-              <h3>Direct contact</h3>
-              <p>
+              <h3 data-i18n="contact.direct">Direct contact</h3>
+              <p data-i18n="contact.directBody">
                 Write to us with a short brief. We typically reply within one
                 business day.
               </p>
               <div class="contact-rows">
                 <div class="contact-row">
-                  <span>Email</span>
+                  <span data-i18n="contact.emailLabel">Email</span>
                   <a href="mailto:hello@unit23.xyz">hello@unit23.xyz</a>
                 </div>
                 <div class="contact-row">
-                  <span>Company</span>
+                  <span data-i18n="contact.companyLabel">Company</span>
                   <strong>UNIT23 LIMITED</strong>
                 </div>
                 <div class="contact-row">
-                  <span>Location</span>
-                  <strong>Hong Kong SAR</strong>
+                  <span data-i18n="contact.locationLabel">Location</span>
+                  <strong data-i18n="top.location">Hong Kong SAR</strong>
                 </div>
                 <div class="contact-row">
-                  <span>Website</span>
+                  <span data-i18n="contact.websiteLabel">Website</span>
                   <a href="https://unit23.xyz">unit23.xyz</a>
                 </div>
               </div>
             </div>
 
             <div class="contact-note">
-              <h3>Helpful details to include</h3>
-              <p>
+              <h3 data-i18n="contact.tipsTitle">Helpful details to include</h3>
+              <p data-i18n="contact.tipsBody">
                 A concise note helps us respond with a relevant next step rather
                 than a generic reply.
               </p>
               <ul>
-                <li>Product or category and estimated volume</li>
-                <li>Origin and destination markets</li>
-                <li>Whether you need trade execution, consulting, or both</li>
-                <li>Target timeline and any hard constraints</li>
+                <li data-i18n="contact.tip1">Product or category and estimated volume</li>
+                <li data-i18n="contact.tip2">Origin and destination markets</li>
+                <li data-i18n="contact.tip3">Whether you need trade execution, consulting, or both</li>
+                <li data-i18n="contact.tip4">Target timeline and any hard constraints</li>
               </ul>
             </div>
           </div>
@@ -553,48 +578,49 @@
                 <small>Limited</small>
               </span>
             </a>
-            <p>
+            <p data-i18n="footer.blurb">
               Hong Kong trading company focused on cross-border trade and
               information consulting.
             </p>
           </div>
 
           <div class="footer-col">
-            <h3>Company</h3>
+            <h3 data-i18n="footer.company">Company</h3>
             <ul>
-              <li><a href="#about">About</a></li>
-              <li><a href="#why-us">Why UNIT23</a></li>
-              <li><a href="#process">How we work</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#about" data-i18n="nav.about">About</a></li>
+              <li><a href="#why-us" data-i18n="nav.why">Why UNIT23</a></li>
+              <li><a href="#process" data-i18n="nav.process">How we work</a></li>
+              <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
-            <h3>Cross-border trade</h3>
+            <h3 data-i18n="footer.trade">Cross-border trade</h3>
             <ul>
-              <li><a href="#trade">Import &amp; export</a></li>
-              <li><a href="#trade">Online retail</a></li>
-              <li><a href="#trade">Logistics services</a></li>
+              <li><a href="#trade" data-i18n="trade.s1.title">Import &amp; export</a></li>
+              <li><a href="#trade" data-i18n="trade.s2.title">Online retail</a></li>
+              <li><a href="#trade" data-i18n="trade.s3.title">Logistics services</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
-            <h3>Consulting</h3>
+            <h3 data-i18n="footer.consulting">Consulting</h3>
             <ul>
-              <li><a href="#consulting">Supply chain management</a></li>
-              <li><a href="#consulting">Online marketing</a></li>
-              <li><a href="#consulting">Channel management</a></li>
+              <li><a href="#consulting" data-i18n="consulting.s1.title">Supply chain management</a></li>
+              <li><a href="#consulting" data-i18n="consulting.s2.title">Online marketing</a></li>
+              <li><a href="#consulting" data-i18n="consulting.s3.title">Channel management</a></li>
             </ul>
           </div>
         </div>
 
         <div class="footer-bottom">
-          <span>© 2026 UNIT23 LIMITED · Hong Kong</span>
+          <span data-i18n="footer.copy">© 2026 UNIT23 LIMITED · Hong Kong</span>
           <span>hello@unit23.xyz</span>
         </div>
       </div>
     </footer>
 
+    <script src="i18n.js" defer></script>
     <script src="main.js" defer></script>
   </body>
 </html>
