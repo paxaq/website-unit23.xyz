@@ -1,9 +1,8 @@
 # unit23.xyz
 
-Static company site for **UNIT23 LIMITED**, hosted on **Cloudflare Pages**.
+Static company site for **UNIT23 LIMITED** (Hong Kong) — cross-border trade and information consulting. Hosted on **Cloudflare Pages**.
 
 - Site: [https://unit23.xyz](https://unit23.xyz)
-- AI product: [https://ai.unit23.xyz](https://ai.unit23.xyz)
 
 ## Stack
 
