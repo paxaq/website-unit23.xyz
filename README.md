@@ -19,53 +19,49 @@ npx --yes serve .
 # or: python3 -m http.server 8080
 ```
 
-## Deploy with Cloudflare Pages (Git)
+## Status (CLI)
 
-### 1. Push this repo to GitHub
+| Item | Value |
+|------|--------|
+| Pages project | `unit23-xyz` |
+| Live preview | https://unit23-xyz.pages.dev |
+| Custom domains | `unit23.xyz`, `www.unit23.xyz` (pending until CNAME exists) |
+| Account ID | `01d3023b107051484e9bfb9b2efbd459` |
+| Zone ID | `877217d9b95c0aef88da94fff4157787` |
 
-Already done if you use the GitHub remote on this project. Otherwise:
-
-```bash
-git remote add origin https://github.com/<you>/website-unit23.xyz.git
-git push -u origin main
-```
-
-### 2. Create a Pages project
-
-1. Open [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages**
-2. **Create** → **Pages** → **Connect to Git**
-3. Authorize GitHub and select this repository
-4. Build settings:
-
-   | Field | Value |
-   |-------|--------|
-   | Production branch | `main` |
-   | Framework preset | **None** |
-   | Build command | *(leave empty)* |
-   | Build output directory | `/` |
-
-5. **Save and Deploy**
-
-You will get a temporary URL like `https://website-unit23-xyz.pages.dev`.
-
-### 3. Attach custom domain `unit23.xyz`
-
-1. Open the Pages project → **Custom domains** → **Set up a domain**
-2. Add `unit23.xyz` (and optionally `www.unit23.xyz`)
-3. Because the zone is already on Cloudflare **in the same account**, DNS records are created automatically
-4. Wait for SSL to become **Active**
-
-Optional: add a Redirect Rule so `www` → apex (or the reverse).
-
-### 4. Ongoing updates
+### Deploy from this machine
 
 ```bash
-git add -A
-git commit -m "Update site copy"
-git push origin main
+# uses wrangler OAuth login (already used once)
+npx wrangler pages deploy . --project-name=unit23-xyz --branch=main
+# or
+npm run deploy
 ```
 
-Cloudflare rebuilds and deploys production on every push to `main`. Pull requests get preview URLs automatically.
+### Deploy from GitHub (push to `main`)
+
+1. Create a Cloudflare API Token: [API Tokens](https://dash.cloudflare.com/profile/api-tokens)
+   - Permissions: **Account → Cloudflare Pages → Edit**, **Zone → DNS → Edit** (zone `unit23.xyz`)
+2. Add GitHub secrets on the repo:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID` = `01d3023b107051484e9bfb9b2efbd459`
+3. Push to `main` (workflow: `.github/workflows/deploy.yml`)
+
+### Bind custom domain DNS (one-time)
+
+Wrangler OAuth only has **Zone read**, so DNS must use an API token:
+
+```bash
+export CLOUDFLARE_API_TOKEN='…'   # Zone.DNS Edit on unit23.xyz
+./scripts/setup-dns.sh
+```
+
+This creates proxied CNAMEs:
+
+- `unit23.xyz` → `unit23-xyz.pages.dev`
+- `www.unit23.xyz` → `unit23-xyz.pages.dev`
+
+SSL on the custom domains usually becomes active within a few minutes.
 
 ## Project layout
 
