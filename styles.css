@@ -504,66 +504,6 @@ body.nav-open .nav-panel {
   margin-top: 0.1rem;
 }
 
-/* ── Metrics strip ── */
-.metrics {
-  background: var(--surface);
-  border-bottom: 1px solid var(--hairline);
-}
-
-.metrics-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-@media (min-width: 800px) {
-  .metrics-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.metric {
-  padding: 1.75rem 1.25rem;
-  border-right: 1px solid var(--hairline);
-  border-bottom: 1px solid var(--hairline);
-}
-
-@media (min-width: 800px) {
-  .metric {
-    border-bottom: 0;
-  }
-
-  .metric:last-child {
-    border-right: 0;
-  }
-}
-
-.metric:nth-child(2n) {
-  border-right: 0;
-}
-
-@media (min-width: 800px) {
-  .metric:nth-child(2n) {
-    border-right: 1px solid var(--hairline);
-  }
-}
-
-.metric-value {
-  font-family: var(--font-display);
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: var(--bg-deep);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-.metric-label {
-  margin-top: 0.4rem;
-  font-size: 0.875rem;
-  color: var(--muted);
-  line-height: 1.4;
-}
-
 /* ── Sections ── */
 .section {
   padding: 4.5rem 0;
