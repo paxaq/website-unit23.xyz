@@ -1,0 +1,12 @@
+{
+  "name": "website-unit23.xyz",
+  "private": true,
+  "description": "UNIT23 company static site (Cloudflare Pages)",
+  "scripts": {
+    "deploy": "wrangler pages deploy . --project-name=unit23-xyz --branch=main",
+    "deploy:preview": "wrangler pages deploy . --project-name=unit23-xyz --branch=preview"
+  },
+  "devDependencies": {
+    "wrangler": "^4.83.0"
+  }
+}
