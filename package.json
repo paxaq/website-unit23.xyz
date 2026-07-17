@@ -2,11 +2,15 @@
   "name": "website-unit23.xyz",
   "private": true,
   "description": "UNIT23 company static site (Cloudflare Pages)",
+  "type": "module",
   "scripts": {
     "deploy": "wrangler pages deploy . --project-name=unit23-xyz --branch=main",
-    "deploy:preview": "wrangler pages deploy . --project-name=unit23-xyz --branch=preview"
+    "deploy:preview": "wrangler pages deploy . --project-name=unit23-xyz --branch=preview",
+    "verify": "node scripts/verify-enterprise-site.mjs",
+    "test": "node scripts/verify-enterprise-site.mjs"
   },
   "devDependencies": {
+    "playwright": "^1.49.0",
     "wrangler": "^4.83.0"
   }
 }

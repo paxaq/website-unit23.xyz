@@ -6,8 +6,16 @@ Static company site for **UNIT23 LIMITED** (Hong Kong) — cross-border trade an
 
 ## Stack
 
-- Pure static HTML / CSS (no build step)
+- Pure static HTML / CSS / light vanilla JS (no build step)
 - Deployed via Git → Cloudflare Pages (free)
+
+## Verify
+
+```bash
+npm install
+npx playwright install chromium   # once
+npm test
+```
 
 ## Local preview
 
